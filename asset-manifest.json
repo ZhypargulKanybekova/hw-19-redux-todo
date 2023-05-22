@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/hw-19-redux-todo/static/css/main.bab61a03.css",
+    "main.js": "/hw-19-redux-todo/static/js/main.ef0b5d5c.js",
+    "index.html": "/hw-19-redux-todo/index.html",
+    "main.bab61a03.css.map": "/hw-19-redux-todo/static/css/main.bab61a03.css.map",
+    "main.ef0b5d5c.js.map": "/hw-19-redux-todo/static/js/main.ef0b5d5c.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.bab61a03.css",
+    "static/js/main.ef0b5d5c.js"
+  ]
+}
