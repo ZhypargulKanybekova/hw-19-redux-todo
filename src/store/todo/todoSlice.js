@@ -1,52 +1,32 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { v4 } from "uuid";
+
 
 const initialState = {
   todos: [],
 };
 export const todoSlice = createSlice({
-  name:"todos",
+  name:"todos ",
   initialState,
   reducers:{
     addTodo:(state,action)=>{
-      return{
-        ...state,
-        todos: [
-          ...state.todos,
-          { title: action.payload, completed: false, id: v4() },
-        ],
-      }
+      state.todos.push(action.payload);
     },
     deleteTodo: (state,action)=>{
-        return{
-          ...state,
-          todos: state.todos.filter((item) => item.id !== action.payload),
-        }
+      state.todos = state.todos.filter((item)=>item.id !== action.payload)
     },
     editTodo:(state,action)=>{
-      return {
-        ...state,
-        todos: state.todos.map((item) => {
-          if (item.id === action.id) {
-            return { ...item, title: action.value };
-          }
-          return item;
-        }),
-      };
+      state.todos = state.todos.map((item)=>
+            item.id === action.payload.id
+            ? {...item,title:action.payload.editValue}
+            :item
+            )
     },
-    deleteAll:(state,action)=>{
-      return initialState;
-    },
+   
     complateTodo:(state,action)=>{
-      return {
-        ...state,
-        todos: state.todos.map((item) => {
-          if (item.id === action.payload) {
-            return { ...item, completed: !item.completed };
-          }
-          return item;
-        }),
-      };
+      state.todos = state.todos.map((item) =>
+            item.id === action.payload 
+            ? {...item, complete : !item.complete} : item
+           )
     }
   }
 })

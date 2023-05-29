@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { TodoList } from "../todoList/TodoList";
@@ -12,7 +12,7 @@ export const TodoForm = () => {
 
   const dispatch = useDispatch();
 
-  const { todos } = useSelector((state) => state);
+  
 
   const changeInputHandler = (e) => {
     setValue(e.target.value);
@@ -20,18 +20,13 @@ export const TodoForm = () => {
 
   const submitHandler = (e) => {
     e.preventDefault();
-    dispatch(todoAction.addTodo());
+    const data = {
+      id: Date.now(),
+      title: value,
+      complate: false,
+    };
+    dispatch(todoAction.addTodo(data));
     setValue("");
-  };
-
-  const removeAllTodo = (id) => {
-    dispatch(todoAction.deleteAll({id:id}));
-  };
-
-  const logoutHandler = () => {
-    dispatch(authAction.logout());
-    dispatch(todoAction.deleteAll());
-    navigate("/login");
   };
 
 
@@ -39,24 +34,22 @@ export const TodoForm = () => {
   return (
     <>
       <Container>
+       
         <SecondContainer>
           <Input type="text" value={value} onChange={changeInputHandler} />
           <Button onClick={submitHandler} disabled={!value}>
             Add
           </Button>
-          <Button onClick={removeAllTodo}>delete all</Button>
         </SecondContainer>
         <div>
-          {todos.map((item) => (
-            <TodoList key={item.id} todo={item} />
-          ))}
+          
+            <TodoList />
+          
         </div>
       </Container>
     </>
   );
 };
-
-
 
 const Container = styled.div`
   display: flex;

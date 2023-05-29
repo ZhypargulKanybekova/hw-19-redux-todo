@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { todoAction } from "../../store/todo/todoSlice";
 // import { todoActionTypes } from "../../store/todo/todoReducer";
@@ -8,52 +8,65 @@ export const TodoList = ({ todo }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [editValue, setEditValue] = useState("");
 
+  const todos  = useSelector((state) => state.todos);
+  console.log(todos, "todods");
+
   const dispatch = useDispatch();
 
-  const changeEditValue = (e) => {
-    setEditValue(e.target.value);
-  };
 
   const deleteHandler = (id) => {
-    dispatch(todoAction.deleteTodo({id:id}));
+    dispatch(todoAction.deleteTodo(id));
   };
 
   const toggleTodoHandler = (id) => {
-    dispatch(todoAction.complateTodo({id:id,completed:false}));
+    dispatch(todoAction.complateTodo(id));
   };
 
-  const editTodoHandler = (id) => {
-    dispatch(todoAction.editTodo({id:id}));
-    setIsEditing();
-  };
+ const editTodoHandler = ({id,title})=>{
+  setIsEditing(id);
+  setEditValue(title)
+ }
 
-  const editHandler = () => {
-    setIsEditing(true);
-    setEditValue(todo.title);
-  };
+ const saveHandler=(id)=>{
+  dispatch(todoAction.editTodo({id,editValue}))
+ }
 
   return (
     <StyledUl>
+    {todos?.map((item) => (
+     
       <StyledLi>
-        {isEditing ? (
+        {item.id === isEditing ? (
           <>
-            <Inputt type="text" value={editValue} onChange={changeEditValue} />
-            <Button onClick={editTodoHandler}>save</Button>
+          <Input 
+          type="text"
+          value={editValue}
+          onChange={(e)=>setEditValue(e.target.value)}/>
+          <button onClick={()=>saveHandler(item.id)} >Save</button>
+          <button onClick={()=>setIsEditing(null)}>Cencel</button>
           </>
         ) : (
-          <>
-            <Container>
-              <Input type="checkbox" onClick={toggleTodoHandler} />
-              <Title done={todo.completed}>{todo.title}</Title>
-            </Container>
-            <Buttons>
-              <Button onClick={deleteHandler}>delete</Button>
-              <Button onClick={editHandler}>edit</Button>
-            </Buttons>
-          </>
+          <Buttons key={item.id}>
+            <Title
+              style={{
+                textDecoration: item.complete ? "line-through" : "none",
+              }}
+            >
+              {item.title}
+            </Title>
+            <Button onClick={() => deleteHandler(item.id)}>
+             delete
+            </Button>
+
+            <Button onClick={() => toggleTodoHandler(item.id)}>complete</Button>
+            <Button onClick={() => editTodoHandler({id:item.id, title:item.title})}>
+              edit
+            </Button>
+          </Buttons>
         )}
       </StyledLi>
-    </StyledUl>
+    ))}
+  </StyledUl>
   );
 };
 
