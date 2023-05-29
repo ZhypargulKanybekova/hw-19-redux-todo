@@ -1,39 +1,32 @@
-import React from 'react'
-import { useDispatch, useSelector } from 'react-redux';
-import { calculateType } from '../../store/calculator/calculator';
+import React from "react";
+import { calculatorAction } from "../../store/calculator/calcularorSlice";
+import { useDispatch, useSelector } from "react-redux";
+
 
 export const Counter = () => {
-
-    const result = useSelector((state) => state.calculator.result);
-    const dispatch = useDispatch()
-
-    const addHandler = () => {
-        dispatch({ type: calculateType.PLUS, payload: 5 });
-      };
-    const minusHandler = () => {
-        dispatch({ type: calculateType.MINUS, payload: 5 });
-      };
-    const multiplicHandler = () => {
-        dispatch({ type: calculateType.MULTIPLIC, payload: 2 });
-      };
-    const divisionHandler = () => {
-        dispatch({ type: calculateType.DIVISION, payload: 4 });
-      };
-    const resetHandler =()=>{
-        dispatch({type:calculateType.RESET,payload:0})
-    }  
-
+  const result = useSelector((state) => state.calculate.result);
+  const dispatch = useDispatch();
+  console.log(result);
+  const addHandler = () => {
+    dispatch(calculatorAction.addNumber(5));
+  };
+  const minusNumber = () => {
+    dispatch(calculatorAction.minus(5));
+  };
+  const multiplayNumber = () => {
+    dispatch(calculatorAction.multiPlay(2));
+  };
+  const substractNumber = () => {
+    dispatch(calculatorAction.subStract(2));
+  };
   return (
     <div>
-        <main >
-      <h1>Redux Calculator</h1>
-      <div>Result: {result}</div>
-      <button  onClick={addHandler}>+ 5</button>
-      <button onClick={minusHandler}>- 5</button>
-      <button  onClick={multiplicHandler}>* 2</button>
-      <button onClick={divisionHandler}>/ 4</button>
-      <button onClick={resetHandler}>reset</button>
-    </main>
+      <h1>Calculator</h1>
+      <span>{result}</span>
+      <button onClick={addHandler}>+</button>
+      <button onClick={minusNumber}>-</button>
+      <button onClick={multiplayNumber}>*</button>
+      <button onClick={substractNumber}>/</button>
     </div>
-  )
-}
+  );
+};

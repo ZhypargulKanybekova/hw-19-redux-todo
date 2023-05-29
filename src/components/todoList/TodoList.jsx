@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
-import { todoActionTypes } from "../../store/todo/todoReducer";
+import { todoAction } from "../../store/todo/todoSlice";
+// import { todoActionTypes } from "../../store/todo/todoReducer";
 
 export const TodoList = ({ todo }) => {
   const [isEditing, setIsEditing] = useState(false);
@@ -13,20 +14,16 @@ export const TodoList = ({ todo }) => {
     setEditValue(e.target.value);
   };
 
-  const deleteHandler = () => {
-    dispatch({ type: todoActionTypes.DELETE_TODO, payload: todo.id });
+  const deleteHandler = (id) => {
+    dispatch(todoAction.deleteTodo({id:id}));
   };
 
-  const toggleTodoHandler = () => {
-    dispatch({ type: todoActionTypes.COMPLETE_TODO, payload: todo.id });
+  const toggleTodoHandler = (id) => {
+    dispatch(todoAction.complateTodo({id:id,completed:false}));
   };
 
-  const editTodoHandler = () => {
-    dispatch({
-      type: todoActionTypes.EDIT_TODO,
-      id: todo.id,
-      value: editValue,
-    });
+  const editTodoHandler = (id) => {
+    dispatch(todoAction.editTodo({id:id}));
     setIsEditing();
   };
 
@@ -107,4 +104,4 @@ const Container = styled.div`
   align-items: center;
   gap: 20px;
 `;
-const StyledTitleContainer = styled.div``;
+

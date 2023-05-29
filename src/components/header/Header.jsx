@@ -1,16 +1,16 @@
 import React from "react";
 import styled from "styled-components";
-import { authActionTypes } from "../../store/auth/authReducer";
-import { todoActionTypes } from "../../store/todo/todoReducer";
 import { useDispatch } from "react-redux";
 import { NavLink, useNavigate } from "react-router-dom";
+import { authAction } from "../../store/auth/authSlice";
+import { todoAction } from "../../store/todo/todoSlice";
 
 const Header = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const logoutHandler = () => {
-    dispatch({ type: authActionTypes.LOGOUT });
-    dispatch({ type: todoActionTypes.DELETE_ALL_TODO });
+    dispatch(authAction.logout());
+    dispatch(todoAction.delete());
     navigate("/login");
   };
   return (

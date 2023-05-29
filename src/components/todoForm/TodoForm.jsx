@@ -2,17 +2,17 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { authActionTypes } from "../../store/auth/authReducer";
-import { todoActionTypes } from "../../store/todo/todoReducer";
 import { TodoList } from "../todoList/TodoList";
+import { todoAction } from "../../store/todo/todoSlice";
+import { authAction } from "../../store/auth/authSlice";
 
-const TodoForm = () => {
+export const TodoForm = () => {
   const [value, setValue] = useState("");
   const navigate = useNavigate();
 
   const dispatch = useDispatch();
 
-  const todo = useSelector((state) => state.todo);
+  const { todos } = useSelector((state) => state);
 
   const changeInputHandler = (e) => {
     setValue(e.target.value);
@@ -20,21 +20,21 @@ const TodoForm = () => {
 
   const submitHandler = (e) => {
     e.preventDefault();
-    dispatch({ type: todoActionTypes.ADD_TODO, payload: value });
+    dispatch(todoAction.addTodo());
     setValue("");
   };
 
-  const removeAllTodo = () => {
-    dispatch({ type: todoActionTypes.DELETE_ALL_TODO });
+  const removeAllTodo = (id) => {
+    dispatch(todoAction.deleteAll({id:id}));
   };
 
   const logoutHandler = () => {
-    dispatch({ type: authActionTypes.LOGOUT });
-    dispatch({ type: todoActionTypes.DELETE_ALL_TODO });
+    dispatch(authAction.logout());
+    dispatch(todoAction.deleteAll());
     navigate("/login");
   };
 
-  console.log(todo.todo);
+
 
   return (
     <>
@@ -47,7 +47,7 @@ const TodoForm = () => {
           <Button onClick={removeAllTodo}>delete all</Button>
         </SecondContainer>
         <div>
-          {todo.todos.map((item) => (
+          {todos.map((item) => (
             <TodoList key={item.id} todo={item} />
           ))}
         </div>
@@ -56,7 +56,7 @@ const TodoForm = () => {
   );
 };
 
-export default TodoForm;
+
 
 const Container = styled.div`
   display: flex;

@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { authActionTypes } from "../../store/auth/authReducer";
 import { styled } from "styled-components";
+import { authAction } from "../../store/auth/authSlice";
 
 export const Login = () => {
   const navigate = useNavigate();
@@ -25,11 +25,7 @@ export const Login = () => {
   const submitHandler = (e) => {
     e.preventDefault();
     if (form.email.includes("@") && form.password.length > 6) {
-      dispatch({
-        type: authActionTypes.LOGIN,
-        email: form.email,
-        password: form.password,
-      });
+      dispatch(authAction.login({ email: form.email,password: form.password,}));
       navigate("/todos");
     }
   };
