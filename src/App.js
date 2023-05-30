@@ -4,8 +4,7 @@ import { AuthPages } from "./pages/AuthPages";
 import { TodoPages } from "./pages/TodoPages";
 import { Counter } from "./components/counter.js/Counter";
 import { TodoForm } from "./components/todoForm/TodoForm";
-
-
+import { TodoList } from "./components/todoList/TodoList";
 
 function App() {
   return (
@@ -14,7 +13,8 @@ function App() {
         <Route path="/login" element={<AuthPages />} />
         <Route path="/todos" element={<TodoPages />}>
           <Route path="counter" element={<Counter />} />
-          <Route path="todo" element={<TodoForm/>} />
+          <Route path="todo" element={<TodoForm />} />
+          {/* <Route path="todo" element={<TodoList />} /> */}
         </Route>
 
         <Route path="*" element={<Navigate to="login" />} />

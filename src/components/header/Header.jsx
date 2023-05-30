@@ -8,9 +8,9 @@ import { todoAction } from "../../store/todo/todoSlice";
 const Header = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const logoutHandler = () => {
-    dispatch(authAction.logout());
-    dispatch(todoAction.delete());
+  const logoutHandler = (id) => {
+    dispatch(authAction.logout(id));
+    dispatch(todoAction.deleteTodo(id));
     navigate("/login");
   };
   return (

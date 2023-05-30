@@ -18,11 +18,12 @@ export const authSlice = createSlice({
                 password:action.password,
                 isAuthozired:true,
             };
+        }, 
+        logout:(state,action)=>{
+            return initialState;
         }
     },
-    logout:(state,action)=>{
-        return initialState;
-    }
+   
 })
 
 export const authAction = authSlice.actions

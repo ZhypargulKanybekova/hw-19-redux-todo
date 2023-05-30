@@ -6,7 +6,7 @@ export const TodoPages = () => {
   return (
     <>
       <Header />
-     <Outlet/>
+      <Outlet />
     </>
   );
 };
